@@ -22,7 +22,7 @@ jobs:
           zip -r release-package.zip .
 
       - name: criar release no git
-        uses: softprps/action-gh-release@v2
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event.inputs.version }}
           name: "release ${{ github.event.inputs.version }}"
