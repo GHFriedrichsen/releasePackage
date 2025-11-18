@@ -1,0 +1,31 @@
+name: Release packge
+
+on: 
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Versão do realease"
+        required: true
+        default: "v1.0.0"
+
+jobs:
+  build-release:
+    name: criar
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repositorio
+        uses: actions/checkout@v4
+
+      - name: compactar
+        run: |
+          zip -r release-package.zip .
+
+      - name: criar release no git
+        uses: softprps/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          name: "release ${{ github.event.inputs.version }}"
+          files: release-package.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
